@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        addFragment(R.id.mainFrameLayout, DoggiesFragment.newInstance(1))
+        replaceFragment(R.id.mainFrameLayout, DoggiesFragment.newInstance(2))
 
         initLog()
     }

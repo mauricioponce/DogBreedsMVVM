@@ -6,8 +6,7 @@
     android:name="com.example.doggiesmvvm.ItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:background="@color/colorAccent"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".DoggiesFragment"
+    tools:context=".list.DoggiesFragment"
     tools:listitem="@layout/doggy_item" />
