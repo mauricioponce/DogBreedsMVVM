@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doggiesmvvm.R
+import com.example.doggiesmvvm.detail.BreedFragmentDetail
+import com.example.doggiesmvvm.doTransaction
 import timber.log.Timber
 
 /**
@@ -53,6 +56,10 @@ class DoggiesFragment : Fragment() {
         model.doggiesList.observe(viewLifecycleOwner, {
             Timber.d("observando los cambios ${it.size}")
             doggyAdapter.update(it)
+        })
+
+        doggyAdapter.selectedItem.observe(viewLifecycleOwner, Observer {
+            activity?.supportFragmentManager?.doTransaction { replace(R.id.mainFrameLayout, BreedFragmentDetail.newInstance(it.breedName)) }
         })
 
         return view
