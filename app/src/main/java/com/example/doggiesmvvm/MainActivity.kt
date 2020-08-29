@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        replaceFragment(R.id.mainFrameLayout, DoggiesFragment.newInstance(2))
+        replaceFragment(R.id.mainContainer, DoggiesFragment.newInstance(2))
 
         initLog()
     }
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
 inline fun FragmentManager.doTransaction(func: FragmentTransaction.() ->
 FragmentTransaction) {
-    beginTransaction().func().commit()
+    beginTransaction().func().addToBackStack("detail").commit()
 }
 
 fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment){

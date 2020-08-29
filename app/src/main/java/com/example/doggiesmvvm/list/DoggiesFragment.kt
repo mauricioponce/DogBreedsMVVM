@@ -59,7 +59,7 @@ class DoggiesFragment : Fragment() {
         })
 
         doggyAdapter.selectedItem.observe(viewLifecycleOwner, Observer {
-            activity?.supportFragmentManager?.doTransaction { replace(R.id.mainFrameLayout, BreedFragmentDetail.newInstance(it.breedName)) }
+            activity?.supportFragmentManager?.doTransaction { replace(R.id.mainContainer, BreedFragmentDetail.newInstance(it.breedName)) }
         })
 
         return view
