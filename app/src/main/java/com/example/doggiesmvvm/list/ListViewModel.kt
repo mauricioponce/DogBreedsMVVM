@@ -11,6 +11,9 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
 
     var selected = MutableLiveData<DoggyUI>()
 
+    var detail: LiveData<List<String>> = Transformations.switchMap(selected) {
+        repository.getImages(it.breedName)
+    }
     val doggiesList: LiveData<List<DoggyUI>> = Transformations.map(repository.getDoggies()) {
         it.map { breed -> convert(breed) }
     }
@@ -18,11 +21,12 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Se convierte al tipo DoggyUI que tiene la info del elemento
      */
-    private fun convert(d: BreedEntity) : DoggyUI {
+    private fun convert(d: BreedEntity): DoggyUI {
         return DoggyUI(d.breedName)
     }
 
     fun select(it: DoggyUI) {
         selected.postValue(it)
+
     }
 }

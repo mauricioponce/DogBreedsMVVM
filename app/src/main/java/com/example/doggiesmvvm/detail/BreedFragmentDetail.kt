@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.doggiesmvvm.R
 import com.example.doggiesmvvm.list.ListViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_breed_detail.*
 import timber.log.Timber
 
@@ -26,8 +27,15 @@ class BreedFragmentDetail : Fragment() {
         val model: ListViewModel by activityViewModels()
 
         model.selected.observe(viewLifecycleOwner, {
-            Timber.d("observing changes in the selected breed")
-            detailName.text = it.breedName
+            breedName.text = it.breedName
         })
+
+        model.detail.observe(viewLifecycleOwner,  {
+            Timber.d("${it[0]}")
+            Picasso.get()
+                .load(it[0])
+                .into(imageView)
+        })
+
     }
 }

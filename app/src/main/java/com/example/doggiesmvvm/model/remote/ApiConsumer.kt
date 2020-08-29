@@ -1,5 +1,6 @@
 package com.example.doggiesmvvm.model.remote
 
+import com.example.doggiesmvvm.model.remote.pojo.BreedImagesWrapper
 import com.example.doggiesmvvm.model.remote.pojo.BreedWrapper
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -12,10 +13,10 @@ interface DoggiesAPI {
     @GET("breeds/list/all")
     fun listaRazas(): Call<BreedWrapper>
 
-    @GET("/breed/{breed}/images")
-    fun listaImagenes(@Path("breed") breed: String?): Call<BreedWrapper>
+    @GET("breed/{breed}/images")
+    fun listaImagenes(@Path("breed") breed: String?): Call<BreedImagesWrapper>
 
-    @GET("/breed/{breed}/{subBreed}/images")
+    @GET("breed/{breed}/{subBreed}/images")
     fun listaImagenesSubraza(
         @Path("breed") breed: String,
         @Path("subBreed") subBreed: String?
