@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.doggiesmvvm.model.db.BreedEntity
+import com.example.doggiesmvvm.model.db.BreedRoomDatabase
 import com.example.doggiesmvvm.model.db.DatabaseManager
 import com.example.doggiesmvvm.model.remote.RetrofitClient
 import com.example.doggiesmvvm.model.remote.pojo.BreedImagesWrapper
@@ -17,9 +18,9 @@ import timber.log.Timber
 class Repository (context: Context, scope: CoroutineScope) {
 
     private val tag = "Repository"
-    private val dbManager = DatabaseManager(context, scope)
+    private val dbManager = DatabaseManager(scope, BreedRoomDatabase.getDatabase(context))
 
-    private val list = dbManager.list
+    val list = dbManager.list
 
     private val images = MutableLiveData<List<String>>()
 
