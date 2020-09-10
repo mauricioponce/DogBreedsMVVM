@@ -32,7 +32,7 @@ class DoggiesAdapter(
 
     private fun createOnClickListener(selected: DoggyUI): View.OnClickListener {
         return View.OnClickListener {
-            selectedItem.postValue(selected)
+            selectedItem.value = selected
         }
     }
 

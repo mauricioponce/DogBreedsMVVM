@@ -13,7 +13,7 @@ class MappersKtTest {
         //Given
         val l = listOf<String>()
         val breedWrapper = BreedWrapper("ok", mapOf("1" to l, "2" to l))
-        val expected = listOf<BreedEntity>(BreedEntity("1"), BreedEntity("2"))
+        val expected = listOf(BreedEntity("1"), BreedEntity("2"))
 
         // When
         val result = breedFromWrapper2Entity(breedWrapper)

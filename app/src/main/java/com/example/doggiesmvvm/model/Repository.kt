@@ -14,7 +14,6 @@ import timber.log.Timber
 
 class Repository (context: Context) {
 
-    private val tag = "Repository"
     private val breedDao = BreedRoomDatabase.getDatabase(context).breedDao()
 
     val list = breedDao.getBreeds()
@@ -22,7 +21,6 @@ class Repository (context: Context) {
     private val images = MutableLiveData<List<String>>()
 
     suspend fun getDoggies(): LiveData<List<BreedEntity>> {
-        Timber.d("getDoggies -------")
         val response = RetrofitClient.retrofitInstance().listaRazas()
 
         if(response.isSuccessful) {

@@ -63,7 +63,7 @@ class BreedRoomDatabaseTest {
     @Test
     fun insertBreeds_happyCase() = runBlocking {
         // Given
-        val breedList = listOf<BreedEntity>(BreedEntity("breed1"), BreedEntity("breed2"), BreedEntity("breed3"))
+        val breedList = listOf(BreedEntity("breed1"), BreedEntity("breed2"), BreedEntity("breed3"))
 
         // When
         breedsDao.insertBreeds(breedList)

@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.doggiesmvvm.model.Repository
 import com.example.doggiesmvvm.model.db.BreedEntity
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 sealed class ViewStatus
 data class DetailView(val breedName: String, val images: List<String>) : ViewStatus()

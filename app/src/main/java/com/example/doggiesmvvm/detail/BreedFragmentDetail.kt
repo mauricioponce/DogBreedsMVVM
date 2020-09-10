@@ -10,7 +10,6 @@ import com.example.doggiesmvvm.R
 import com.example.doggiesmvvm.list.ListViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_breed_detail.*
-import timber.log.Timber
 
 class BreedFragmentDetail : Fragment() {
 
@@ -31,7 +30,6 @@ class BreedFragmentDetail : Fragment() {
         })
 
         model.detail.observe(viewLifecycleOwner,  {
-            Timber.d("${it[0]}")
             Picasso.get()
                 .load(it[0])
                 .into(imageView)
