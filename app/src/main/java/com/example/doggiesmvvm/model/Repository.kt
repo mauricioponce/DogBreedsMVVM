@@ -5,45 +5,37 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.doggiesmvvm.model.db.BreedEntity
 import com.example.doggiesmvvm.model.db.BreedRoomDatabase
-import com.example.doggiesmvvm.model.db.DatabaseManager
 import com.example.doggiesmvvm.model.remote.RetrofitClient
 import com.example.doggiesmvvm.model.remote.pojo.BreedImagesWrapper
-import com.example.doggiesmvvm.model.remote.pojo.BreedWrapper
-import kotlinx.coroutines.CoroutineScope
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
-class Repository (context: Context, scope: CoroutineScope) {
+class Repository (context: Context) {
 
     private val tag = "Repository"
-    private val dbManager = DatabaseManager(scope, BreedRoomDatabase.getDatabase(context))
+    private val breedDao = BreedRoomDatabase.getDatabase(context).breedDao()
 
-    val list = dbManager.list
+    val list = breedDao.getBreeds()
 
     private val images = MutableLiveData<List<String>>()
 
-    /**
-     * Alternativa 1: Desde la base de datos
-     *
-     * Desde la base de datos obtenemos la lista de las razas.
-     * Se expone un livedata
-     */
-    fun getDoggies() : LiveData<List<BreedEntity>>{
-        RetrofitClient.retrofitInstance().listaRazas().enqueue(object : Callback<BreedWrapper>  {
-            override fun onFailure(call: Call<BreedWrapper>, t: Throwable) {
-                Timber.d(tag, "paff y nació chocapic $t")
-            }
+    suspend fun getDoggies(): LiveData<List<BreedEntity>> {
+        Timber.d("getDoggies -------")
+        val response = RetrofitClient.retrofitInstance().listaRazas()
 
-            override fun onResponse(
-                call: Call<BreedWrapper>,
-                response: Response<BreedWrapper>
-            ) {
-                Timber.d("${response.body()}")
-                dbManager.saveBreeds(response.body())
+        if(response.isSuccessful) {
+            response.body()?.let {
+                val processBreeds = breedFromWrapper2Entity(it)
+                if(processBreeds != null) {
+                    breedDao.insertBreeds(processBreeds)
+                }
             }
-        })
+        } else {
+            Timber.d("${response.code()} - ${response.errorBody()?.string()}")
+        }
+
         return list
     }
 

@@ -3,6 +3,7 @@ package com.example.doggiesmvvm.model.remote
 import com.example.doggiesmvvm.model.remote.pojo.BreedImagesWrapper
 import com.example.doggiesmvvm.model.remote.pojo.BreedWrapper
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -11,7 +12,7 @@ import retrofit2.http.Path
 interface DoggiesAPI {
 
     @GET("breeds/list/all")
-    fun listaRazas(): Call<BreedWrapper>
+    suspend fun listaRazas(): Response<BreedWrapper>
 
     @GET("breed/{breed}/images")
     fun listaImagenes(@Path("breed") breed: String?): Call<BreedImagesWrapper>
