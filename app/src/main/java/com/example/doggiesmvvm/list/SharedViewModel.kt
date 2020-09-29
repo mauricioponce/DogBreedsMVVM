@@ -6,14 +6,12 @@ import com.example.doggiesmvvm.model.Repository
 import com.example.doggiesmvvm.model.db.BreedEntity
 import kotlinx.coroutines.launch
 
-sealed class ViewStatus
-data class DetailView(val breedName: String, val images: List<String>) : ViewStatus()
-object LoadingDetail: ViewStatus()
 
-
-class ListViewModel(application: Application) : AndroidViewModel(application) {
+class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(application)
+
+    var selected = MutableLiveData<DoggyUI>()
 
     init {
         viewModelScope.launch {
@@ -24,8 +22,6 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     val doggiesList: LiveData<List<DoggyUI>>  = repository.list.map {
         it.map { breed -> convert(breed) }
     }
-
-    var selected = MutableLiveData<DoggyUI>()
 
     var detail: LiveData<List<String>> = Transformations.switchMap(selected) {
         repository.getImages(it.breedName)

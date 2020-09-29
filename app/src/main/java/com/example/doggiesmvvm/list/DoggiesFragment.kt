@@ -21,7 +21,7 @@ class DoggiesFragment : Fragment() {
 
     private lateinit var doggyAdapter: DoggiesAdapter
 
-    val model: ListViewModel by activityViewModels()
+    val model: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
