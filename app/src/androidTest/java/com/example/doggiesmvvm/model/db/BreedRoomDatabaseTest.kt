@@ -61,7 +61,23 @@ class BreedRoomDatabaseTest {
     }
 
     @Test
-    fun insertBreeds_happyCase() = runBlocking {
+    fun insertBreeds_happyCase_1element() = runBlocking {
+        // Given
+        val breedList = listOf(BreedEntity("breed1"))
+
+        // When
+        breedsDao.insertBreeds(breedList)
+
+        // Then
+        breedsDao.getBreeds().observeForever {
+            assertThat(it).isNotNull()
+            assertThat(it).isNotEmpty()
+            assertThat(it).hasSize(1)
+        }
+    }
+
+    @Test
+    fun insertBreeds_happyCase_3elements() = runBlocking {
         // Given
         val breedList = listOf(BreedEntity("breed1"), BreedEntity("breed2"), BreedEntity("breed3"))
 
