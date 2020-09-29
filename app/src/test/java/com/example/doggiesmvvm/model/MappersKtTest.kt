@@ -9,30 +9,44 @@ import com.google.common.truth.Truth.assertThat
 class MappersKtTest {
 
     @Test
-    fun breedFromWrapper2Entity() {
+    fun breedFromWrapper2Entity_empty() {
         //Given
-        val l = listOf<String>()
-        val breedWrapper = BreedWrapper("ok", mapOf("1" to l, "2" to l))
-        val expected = listOf(BreedEntity("1"), BreedEntity("2"))
+        val wrapper = BreedWrapper("ok", mapOf())
 
-        // When
-        val result = breedFromWrapper2Entity(breedWrapper)
+        // The
+        val result = breedFromWrapper2Entity(wrapper)
 
         // Then
         assertThat(result).isNotNull()
-        assertThat(result).hasSize(2)
-        assertThat(result).isEqualTo(expected)
+        assertThat(result).isEmpty()
     }
 
     @Test
-    fun breedFromWrapper2Entity_nullBreeds() {
+    fun breedFromWrapper2Entity_null() {
         //Given
-        val breedWrapper = null
+        val wrapper = null
 
-        // When
-        val result = breedFromWrapper2Entity(breedWrapper)
+        // The
+        val result = breedFromWrapper2Entity(wrapper)
 
         // Then
         assertThat(result).isNull()
+    }
+
+    @Test
+    fun breedFromWrapper2Entity_happyCase() {
+        //Given
+        val wrapper = BreedWrapper("ok", mapOf("key1" to listOf("v1")))
+        val expected = BreedEntity("key1")
+
+        // The
+        val result = breedFromWrapper2Entity(wrapper)
+
+        // Then
+        assertThat(result).isNotNull()
+        assertThat(result).isNotEmpty()
+        assertThat(result).hasSize(1)
+        assertThat(result).containsExactly(expected)
+
     }
 }
