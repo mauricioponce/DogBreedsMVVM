@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.example.doggiesmvvm.R
-import com.example.doggiesmvvm.list.ListViewModel
+import com.example.doggiesmvvm.list.SharedViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_breed_detail.*
 
@@ -23,17 +24,20 @@ class BreedFragmentDetail : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model: ListViewModel by activityViewModels()
+        val model: SharedViewModel by activityViewModels()
 
-        model.selected.observe(viewLifecycleOwner, {
-            breedName.text = it.breedName
-        })
+        model.run {
+            selected.observe(viewLifecycleOwner, Observer {
+                breedName.text = it.breedName
+            })
 
-        model.detail.observe(viewLifecycleOwner,  {
-            Picasso.get()
-                .load(it[0])
-                .into(imageView)
-        })
+
+            detail.observe(viewLifecycleOwner, Observer {
+                Picasso.get()
+                    .load(it[0])
+                    .into(imageView)
+            })
+        }
 
     }
 }
